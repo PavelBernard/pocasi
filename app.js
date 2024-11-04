@@ -10,37 +10,24 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-function getTemp(city, id) {
-    const apiKey = "6655ee54cb308f830a12f9f17ca78ec3";
-    if(city != "") {
-        fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric&lang=cs")
-        .then(response => response.json())
-        .then(data => {
-            if (data.cod === 200) {
-                //odpoved ok, teplota prisla
-                const temp = data.main.temp;
-                document.getElementById(id).innerText = (city + ": " + temp + "°C");
+function getCityTemp(cityName, id) {
+    const key = "6655ee54cb308f830a12f9f17ca78ec3";
+        fetch("https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + key + "&units=metric&lang=cs")
+        .then(function(resp) {response.json()})
+        .then(function(data) {
+            console.log(data);
+            if (data.cod === 200){
+                document.getElementById(id).textContent = data.name + ": " + data.main.temp + "°C";
             } else {
-                //sice prisla odpoved, ale je v ni chyba
-                document.getElementById(id).innerText = "Chyba: " + data.message;
+                console.log(data);
             }
         })
-        .catch(error => {
-            //sem by se to nemelo dostat...
-            document.getElementById(id).innerText = "Zařízení není online";
+        .catch(function(error) {
+            console.log("Error ocured" + error);
         });
-    } else {
-        //nemame zadane mesto
-        document.getElementById(id).innerText = "Zadej město";
-    }
 }
 
-window.onload = function() {
-    getTemp("Dobronín", "dobronin");
-    getTemp("Jihlava", "jihlava");
-};
-
 function getUserCityTemp() {
-    const city = document.getElementById("input_city").value;
-    getTemp(city, "city");
+    const input_city = document.getElementById("input_city").value;
+    getCityTemp(input_city, "city");
 }
