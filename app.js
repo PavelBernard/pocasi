@@ -27,6 +27,11 @@ function getCityTemp(cityName, id) {
         });
 }
 
+window.onload = function(){
+    getCityTemp("Dobronin", "dobronin");
+    getCityTemp("Jihlava", "jihlava");
+}
+
 function getUserCityTemp() {
     const input_city = document.getElementById("input_city").value;
     getCityTemp(input_city, "city");
