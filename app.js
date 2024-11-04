@@ -13,7 +13,7 @@ if ('serviceWorker' in navigator) {
 function getCityTemp(cityName, id) {
     const key = "6655ee54cb308f830a12f9f17ca78ec3";
         fetch("https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + key + "&units=metric&lang=cs")
-        .then(function(resp) {response.json()})
+        .then(function(resp) {return resp.json()})
         .then(function(data) {
             console.log(data);
             if (data.cod === 200){
